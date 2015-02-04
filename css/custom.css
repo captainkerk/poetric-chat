@@ -1,0 +1,108 @@
+body {
+  width: 100%;
+  height: 100%;
+
+  background-image: -ms-linear-gradient(bottom, #FAFADE 0%, #188C9E 100%);
+  background-image: -moz-linear-gradient(bottom, #FAFADE 0%, #188C9E 100%);
+  background-image: -o-linear-gradient(bottom, #FAFADE 0%, #188C9E 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FAFADE), color-stop(1, #188C9E));
+  background-image: -webkit-linear-gradient(bottom, #FAFADE 0%, #188C9E 100%);
+  background-image: linear-gradient(to top, #FAFADE 0%, #188C9E 100%);
+
+  background-attachment: fixed;
+}
+
+.landing {
+  padding-bottom: 50px;
+  padding-top: 60px;
+  margin: auto;
+  max-width: 500px;
+}
+
+.user-message {
+  text-align: right;
+}
+
+.jkms {
+
+    padding-top: 50px;
+    margin: auto;
+    max-width: 600px;
+}
+
+.send-pane {
+  position: absolute;
+  bottom: 0;
+  width: 500px;
+  height: 100px;
+}
+
+.message-display {
+  float: left;
+  overflow: auto;
+  width: 400px;
+  height: 100%;
+}
+
+.member-display{
+  float: right;
+  width: 200px;
+  height: 100%;
+  border-left: 1px solid #101010;
+}
+
+.member-list {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  list-style-type: none;
+}
+
+.member-display-title {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.user-input {
+  width: 100%;
+  height: 35px;
+  float: left;
+
+  border: 5px solid #101010;
+  -webkit-box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  -moz-box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.5);
+
+}
+
+.username-input {
+  height: 30px;
+
+  width: 100%;
+}
+
+#message-send {
+  float: right;
+}
+
+body {
+  font: 13px Helvetica, Arial;
+}
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#messages li {
+  padding: 10px 10px;
+}
+#messages li:nth-child(odd) {
+
+}

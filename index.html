@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <title>jc</title>
+    <style>
+
+    </style>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/messenger/1.4.0/css/messenger.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/messenger/1.4.0/css/messenger-theme-flat.css" rel="stylesheet">
+    <link href="custom.css" rel="stylesheet">
+  </head>
+  <body>
+
+  <div class="landing" id="landing">
+        <h3>Pick a username: </h3>
+        <input id="username-input" class="form-control username-input" autocomplete="off"/>
+  </div>
+
+  <div class="jkms" id="jkms" hidden>
+    <ul id="messages" class="message-display"></ul>
+    <div class="member-display">
+      <div class="member-display-title"><h3>Participants</h3></div>
+      <ul id="members" class="member-list"></ul>
+    </div>
+    <div class="send-pane">
+        <input id="message-input" class="form-control user-input" autocomplete="off" placeholder="type something..."/>
+
+    </div>
+  </div>
+
+<script src="//code.jquery.com/jquery-1.11.1.js"></script>
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/messenger/1.4.0/js/messenger.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/messenger/1.4.0/js/messenger-theme-flat.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+$(document).ready(function() {
+  var h2 = window.innerHeight - 150;
+  $(".jkms").css("height", h2);
+  var socket = io();
+
+  participants = [];
+  colors = [];
+
+
+  socket.on('membersList', function(members){
+    members.forEach(function(username) {
+      $('#members').append($('<li class="user-message" id=user-' + username + '>').text(username));
+      colors.push(getRandomColor());
+      participants.push(username);
+    });
+  });
+
+  socket.on('message', function(message){
+
+    var position = participants.indexOf(message.author);
+    var color = colors[position];
+
+    bgcolor = color.split(',')[0];
+    textcolor = color.split(',')[1];
+
+    $('#messages').append($('<li>').text(message.author + ': ' + message.content).css({"backgroundColor": bgcolor, "color": textcolor}));
+
+
+
+  });
+
+  socket.on('user connected', function(username){
+    Messenger().post(username + ' joined the conversation!');
+    $('#members').append($('<li class="user-message" id=user-' + username + '>').text(username));
+    colors.push(getRandomColor());
+    participants.push(username);
+  });
+
+  socket.on('user disconnected', function(user){
+    var username = '#user-' + user;
+    $(username).empty();
+    Messenger().post(user + ' disconnected.');
+  });
+
+  $('#username-input').keypress(function (e) {
+    if (e.which == 13) {
+
+      myUsername = $('#username-input').val();
+
+      $('#members').prepend($('<li class="user-message">').text(myUsername + ' (You)'));
+
+      socket.emit('user connected', myUsername);
+
+      $('#landing').hide('fade', 500);
+
+      setTimeout(function(){
+        $('#jkms').show('fade', 500);
+      }, 500);
+    }
+  });
+
+  $('#message-input').keypress(function (e) {
+    if (e.which == 13) {
+
+        var msg = $('#message-input').val();
+
+        if(msg) {
+            var message = new Object();
+
+            message.author = myUsername;
+            message.content = msg;
+
+            socket.emit('message', message);
+
+            $('#messages').append($('<li class="user-message">').text('Me: ' + msg));
+
+            $('#message-input').val('');
+        }
+        else
+        {
+            alert("type something!");
+        }
+    }
+  });
+});
+
+function getRandomColor(colors) {
+  colors = ["#333333,#FFFFFF", "#46BCDE,#333333", "#52D273,#333333", "#E94F64,#333333", "#E57254,#333333", "#E5C454,#333333", "#D6D8DE,#333333", "#656565,#46BCDE"];
+  return colors[Math.floor(Math.random() * (8))];
+}
+
+</script>
+</body>
+</html>
