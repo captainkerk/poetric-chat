@@ -22,6 +22,7 @@ io.on('connection', function(socket){
 		if(username) {
 			socket.broadcast.emit('user disconnected', username);
 
+			console.log(username + ' disconnected');
 			var position = membersList.indexOf(username);
 			if (position > -1) {
 				membersList.splice(position, 1);
