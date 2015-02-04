@@ -12,6 +12,7 @@ app.get('/custom.css', function(req, res){
 
 var membersList = [];
 
+
 io.on('connection', function(socket){
 	var username;
 

@@ -45,7 +45,6 @@ $(document).ready(function() {
   participants = [];
   colors = [];
 
-
   socket.on('membersList', function(members){
     members.forEach(function(username) {
       $('#members').append($('<li class="user-message" id=user-' + username + '>').text(username));
@@ -63,9 +62,6 @@ $(document).ready(function() {
     textcolor = color.split(',')[1];
 
     $('#messages').append($('<li>').text(message.author + ': ' + message.content).css({"backgroundColor": bgcolor, "color": textcolor}));
-
-
-
   });
 
   socket.on('user connected', function(username){
@@ -123,9 +119,9 @@ $(document).ready(function() {
   });
 });
 
-function getRandomColor(colors) {
-  colors = ["#333333,#FFFFFF", "#46BCDE,#333333", "#52D273,#333333", "#E94F64,#333333", "#E57254,#333333", "#E5C454,#333333", "#D6D8DE,#333333", "#656565,#46BCDE"];
-  return colors[Math.floor(Math.random() * (8))];
+function getRandomColor() {
+  colors = ["#333333,#FFFFFF", "#46BCDE,#333333", "#52D273,#333333", "#E94F64,#333333", "#E57254,#333333", "#E5C454,#333333", "#D6D8DE,#333333", "#656565,#46BCDE", "#6F5499,#FFFFFF", "#00A388,#333333", "#FF6138,#333333", "#046380,#333333"];
+  return colors[Math.floor(Math.random() * (12))];
 }
 
 </script>
